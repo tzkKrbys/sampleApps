@@ -1,15 +1,22 @@
 window.onload = function() {
+  var count = 0;
+  var isGameStarted = false;
   var moveLeft;
   var moveRight;
 
   window.addEventListener('keydown', KeyDown, true); //キーを押した時、呼び出される関数を指定
   window.addEventListener('keyup', KeyUp, true); //キーを離した時、呼び出される関数を指定
+  document.querySelector('canvas').addEventListener('click', loop, true); //キーを離した時、呼び出される関数を指定
 
   // Canvas未サポートは実行しない
   if (!window.HTMLCanvasElement) return;
   var canvas = document.querySelector('#canvas-container');
   var ctx = canvas.getContext('2d');
 
+  /* フォントスタイルを定義 */
+  ctx.font = "40px 'ＭＳ Ｐゴシック'";
+  ctx.fillStyle = "red";
+  ctx.fillText("click!", 150, 250, 100);
 
   function drawCircle(x, y, scale, color) {
       ctx.beginPath();
@@ -35,7 +42,7 @@ window.onload = function() {
         };
   })();
 
-  loop();
+  // loop();
 
   //----------------------------------------ボールの変数
   var speedX = 4;    //移動速度
@@ -44,13 +51,14 @@ window.onload = function() {
   var y = 50;      //y軸の位置
 
   //----------------------------------------実機の変数
-  var rectSpeedX = 6;    //移動速度
+  var rectSpeedX = 8;    //移動速度
   var rectSpeedY = 1.3;    //移動速度
   var rectX = 0;      //X軸の位置
   var rectY = 400;      //y軸の位置
 
   // ループ処理
   function loop() {
+    count++;
     requestAnimFrame(loop);
     ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
     // ループ毎にxを加算
@@ -88,6 +96,9 @@ window.onload = function() {
       rectX = 300;
     }
     drawRect(rectX,rectY,100,10,"#2f6");
+
+    // console.log(count);
+    document.getElementById("count").innerHTML = Math.floor(count / 60);
   }
 
   function KeyDown(e) {
